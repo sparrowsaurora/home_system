@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ folder }} Episodes</title>
+</head>
+<body>
+    <h1>{{ folder }}</h1>
+    <ul>
+    {% for episode in episodes %}
+        <li><a href="/watch/{{ folder }}/{{ episode }}">{{ episode }}</a></li>
+    {% endfor %}
+    </ul>
+    <a href="/">Back to list</a>
+</body>
+</html>
