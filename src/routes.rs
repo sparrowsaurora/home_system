@@ -1,17 +1,21 @@
 use actix_web::{get, web, HttpResponse, Responder};
+use tokio::fs;
 
 #[get("/")]
 async fn root() -> impl Responder {
     println!("Root");
-    HttpResponse::Ok().body("Hello from /")
+    match fs::read_to_string("static/index.html").await {
+        Ok(contents) => HttpResponse::Ok().content_type("text/html").body(contents),
+        Err(_) => HttpResponse::InternalServerError().body("Could not load HTML file"),
+    }
 }
 
-#[get("/hello")]
-async fn hello() -> impl Responder {
-    println!("/Hello");
-    HttpResponse::Ok().body("Hello from /hello")
+#[get("/weather")]
+async fn weather() -> impl Responder {
+    println!("/weather");
+    HttpResponse::Ok().body("Hello from /weather")
 }
 
 pub fn configure(cfg: &mut web::ServiceConfig) {
-    cfg.service(root).service(hello);
+    cfg.service(root).service(weather);
 }
