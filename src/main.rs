@@ -1,4 +1,5 @@
 use actix_web::{App, HttpServer};
+mod logic;
 mod routes;
 
 #[actix_web::main]

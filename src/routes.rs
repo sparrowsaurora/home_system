@@ -12,6 +12,13 @@ async fn root() -> impl Responder {
 
 #[get("/weather")]
 async fn weather() -> impl Responder {
+    // setup
+    use crate::logic::weather;
+    // Logic
+
+    let respone = weather();
+
+    // Returns
     println!("/weather");
     HttpResponse::Ok().body("Hello from /weather")
 }
