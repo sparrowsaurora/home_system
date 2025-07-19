@@ -1,4 +1,5 @@
-use actix_web::{get, web, HttpResponse, Responder};
+use crate::logic::{self, weather::get_weather};
+use actix_web::{dev::Response, get, web, HttpResponse, Responder};
 use tokio::fs;
 
 #[get("/")]
@@ -12,15 +13,12 @@ async fn root() -> impl Responder {
 
 #[get("/weather")]
 async fn weather() -> impl Responder {
-    // setup
-    use crate::logic::weather;
     // Logic
-
-    let respone = weather();
+    let response: logic::weather::WeatherReport = get_weather();
 
     // Returns
-    println!("/weather");
-    HttpResponse::Ok().body("Hello from /weather")
+    println!("{}", response);
+    HttpResponse::Ok().body(format!("{}", response))
 }
 
 pub fn configure(cfg: &mut web::ServiceConfig) {
